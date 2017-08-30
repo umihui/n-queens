@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -78,12 +78,29 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+
+    // quilty's note: conflicts are defined on Boardspec.js as positions where
+    // pieces can attack each other
+    // also checked for uses of this test in current file
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // is method of Board, which will be the context and a board is
+      // will we need to traverse over the board?  I should probably check specrunner or the board
+      // to see what its properties are: just checked and it appears as if I can do a lookup of the rows
+      var targetRow = this.rows()[rowIndex];
+      // check to see if there are more than one 1 in array as the 1 indicates presence of rook/queen
+      return targetRow.contains(1);
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      //iterate over rows
+      //  if hasRowConflictAt on current row returns true return true
+      //return false
+      for (var i = 0; i < this.rows().length; i++) {
+        if (this.hasRowConflictAt(i) === true) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
