@@ -135,15 +135,41 @@
 
 
       // [0 0] [0 0]
-      // make col array for column
+      // make col array for column <===actually no need for this when we have a counter that tracks
+      // create counter for pieces
       // iterate over rows
       //  for each row, push contents of the element at colIndex of current row to col array
       // iterate over column
+      //  if element is one, then increment counter
+      //  if pieces is greater than one return true
+      // return false
+      var pieces = 0;
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i][colIndex] === 1) {
+          pieces++;
+        }
+        if (pieces > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // get rows
+      // iterate over rows <=== no need since hasColConflictAt takes care of this for us
+      //   iterate over the length of just one of the rows
+      //     if hasColConflictAt for current col returns true return true
+      // return false
+      if (this.rows()) {
+        for (var i = 0; i < this.rows()[0].length; i++) {
+          if (this.hasColConflictAt(i) === true) {
+            return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
