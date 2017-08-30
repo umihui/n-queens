@@ -88,7 +88,7 @@
       // to see what its properties are: just checked and it appears as if I can do a lookup of the rows
       var targetRow = this.rows()[rowIndex];
       // check to see if there are more than one 1 in array as the 1 indicates presence of rook/queen
-      return targetRow.contains(1);
+      return targetRow.includes(1);
     },
 
     // test if any rows on this board contain conflicts
