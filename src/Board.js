@@ -83,12 +83,28 @@
     // pieces can attack each other
     // also checked for uses of this test in current file
     hasRowConflictAt: function(rowIndex) {
+      var pieces = 0;
       // is method of Board, which will be the context and a board is
       // will we need to traverse over the board?  I should probably check specrunner or the board
       // to see what its properties are: just checked and it appears as if I can do a lookup of the rows
       var targetRow = this.rows()[rowIndex];
       // check to see if there are more than one 1 in array as the 1 indicates presence of rook/queen
-      return targetRow.includes(1);
+      // this is wrong.  we need more than 1 1, not simply the presence of 1
+
+      // redo:
+      // iterate over row
+      //  if current element is 1, add one to pieces
+      //  if pieces is greater than 1, return true
+      // return false
+      for (var i = 0; i < targetRow.length; i++) {
+        if (targetRow[i] === 1) {
+          pieces++;
+        }
+        if (pieces > 1) {
+          return true;
+        }
+      }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
@@ -111,6 +127,18 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // does not have a col() method, so will use rows(), which returns an array of rows
+      // columns will be the number of elements within those rows
+      // which is defined by finding more than one 1
+      // build a temporary column per column test.
+      // so...
+
+
+      // [0 0] [0 0]
+      // make col array for column
+      // iterate over rows
+      //  for each row, push contents of the element at colIndex of current row to col array
+      // iterate over column
       return false; // fixme
     },
 
