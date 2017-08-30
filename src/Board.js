@@ -189,24 +189,61 @@
 
         0,1 1,0 <== right to left i,j i+1, j-1 <=== check for existence of j-1 at i+1 <=== minor
       */
-      var rows = this.rows();
-      for (var i = 0; i < rows.length; i++) {
-        // NOTE TO SELF: you don't need to find EVERY conflict. Just for specified colindex at first row
-        
-        // create pieces counter
-        // for 
-        // iterate through rows
-        //  iterate through col of row
-        //    if diagonal travel (left-top to bottom-right) is possible
-        //      if there is a piece on the next piece of the diagonal, increment pieces 
+      var pieces = 0;
+      // create pieces counter
+      // if board has no rows return false
+      // look for piece at first row at passed idx (if true, increment pieces counter)
+      // if pieces counter > 1 return true
+      // if diagonal travel (left-top to bottom-right) is not possible
+      //   return false
+      // (else)
+      // run hasMajorDiagonalConflictAtOn the next diagonal coord on context of array copy with first row missing 
+      // if return value is a number,
+      //  increment pieces counter by number
+      //  if pieces > 1 return true
+      debugger;
+      var rows = this.rows(); // 10 
+      if (rows.length === 0) {
+        return false;
       }
-      
-      
-      return false; // fixme
+      if (rows[majorDiagonalColumnIndexAtFirstRow] === 1) {
+        pieces++;
+        if (pieces > 1) {
+          return true;
+        }
+      }
+      if (rows[1][majorDiagonalColumnIndexAtFirstRow + 1] === undefined) {
+        return false;
+      }
+      var copyFromNextRowOn = this.slice();
+      copyFromNextRowOn.shift();
+      var result = copyFromNextRowOn.hasMajorDiagonalConflictAt(majorDiagonalColumnIndexAtFirstRow + 1);
+      if (typeof result === 'number') {
+        pieces += result;
+        if (pieces > 1) {
+          return true;
+        }
+      }
+      return pieces;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // traverse over entire board, which means:
+      // iterate over rows
+      //   iterate over columns
+      //     if hasMajorDiagConflict at current idx is true return true
+      // return false
+      var rows = this.rows();
+      var noOfCols = this.rows()[0].length;
+      while (rows.length > 0) {
+        for (var j = 0; j < noOfCols; j++) {
+          if (rows.hasMajorDiagonalConflictAt(j) === true) {
+            return true;
+          }
+        }
+        rows.shift();
+      }
       return false; // fixme
     },
 
