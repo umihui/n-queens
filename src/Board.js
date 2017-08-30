@@ -167,12 +167,14 @@
       //check each
       //use rows() get   
       //hasMajorDiagonalConflictAt(0);
-      
-      for (var i = 0; i < this.get('n'); i++) {
+      var start = 0 - this.get('n') + 1;
+      for (var i = start; i < this.get('n'); i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
       }
+      // iterate over       
+      
       
       return false; // fixme
     },
