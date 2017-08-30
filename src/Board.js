@@ -117,7 +117,7 @@
           return true;
         }
       }
-      return false; // fixme
+      return false; 
     },
 
 
@@ -153,7 +153,7 @@
           return true;
         }
       }
-      return false; // fixme
+      return false; 
     },
 
     // test if any columns on this board contain conflicts
@@ -170,7 +170,7 @@
           }
         }
       }
-      return false; // fixme
+      return false; 
     },
 
 
@@ -180,6 +180,28 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      /*
+        000 000 000 | 0,0  1,1 2,2 3,3 <=== these are coords to compare for pieces for corner diag left to right <==== major
+
+        (row, column) 0,2 1,1 2,1 <== coords for right-top to left-bottom  <=== 
+
+        0,1 1,2 <== left to right  i,j (i+1, j+1 <=== check for existence of j+1 at i+1) <=== major (b/c it's left to right
+
+        0,1 1,0 <== right to left i,j i+1, j-1 <=== check for existence of j-1 at i+1 <=== minor
+      */
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        // NOTE TO SELF: you don't need to find EVERY conflict. Just for specified colindex at first row
+        
+        // create pieces counter
+        // for 
+        // iterate through rows
+        //  iterate through col of row
+        //    if diagonal travel (left-top to bottom-right) is possible
+        //      if there is a piece on the next piece of the diagonal, increment pieces 
+      }
+      
+      
       return false; // fixme
     },
 
