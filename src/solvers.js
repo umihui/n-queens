@@ -54,32 +54,54 @@ window.findNQueensSolution = function(n) {
     console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
     return solution.rows();
   }
-  var solution;
-  var helper = function (colIndex) {
-    if (colIndex === n + 2) {
-      //debugger;
-      solution = undefined;
+  var solution = new Board({n: n});
+  var counter = 0;
+  var helper = function (rowIndex) {
+    debugger;
+    if (rowIndex === n) {
       return;
     }
-    solution = new Board({n: n});
-    solution.togglePiece(0, colIndex);
-    var count = 1;
-    for (var row = 1; row < n; row++) {
-      for (var col = 0; col < n; col++) {
-        solution.togglePiece(row, col);
-        count++;
-        if (solution.hasAnyQueensConflicts()) {
-          solution.togglePiece(row, col);
-          count--;
-        }
+    if (counter === n) {
+      return;
+    }
+    for (var column = 0; column < n; column++) {
+      solution.togglePiece(rowIndex, column);
+      counter++;
+      if (!solution.hasAnyQueensConflicts()) {
+        helper(rowIndex + 1);
       }
+      solution.togglePiece(rowIndex, column);
+      counter--;
     }
-    if (count === n ) {
-      return;
-    } 
-
-    helper(colIndex + 1);
   };
+  // var helper = function (colIndex) {
+  //   debugger;
+  //   if (colIndex === n + 2) {
+  //     solution = undefined;
+  //     return;
+  //   }
+  //   solution = new Board({n: n});
+  //   solution.togglePiece(0, colIndex);
+  //   var count = 1;
+  //   for (var row = 1; row < n; row++) {
+  //     for (var col = 0; col < n; col++) {
+  //       solution.togglePiece(row, col);
+  //       count++;
+  //       if (solution.hasAnyQueensConflicts()) {
+  //         solution.togglePiece(row, col);
+  //         count--;
+  //       }
+  //     }
+  //     if (count === n ) {
+  //       return;
+  //     }
+  //   }
+  //   // if (count === n ) {
+  //   //   return;
+  //   // } 
+
+  //   helper(colIndex + 1);
+  // };
   
   helper(0);
   
