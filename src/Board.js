@@ -147,7 +147,7 @@
       
       for (var row = 0; row < this.get('n'); row++ ) {
         if (this.get(row)[col] === 1) {
-          console.log(row, col);
+          //console.log(row, col);
           currentResult++;
         }
         col++;
