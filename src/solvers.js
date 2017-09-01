@@ -14,22 +14,55 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 
+window.findSolution = function(row, n, board, validator, callback) {
+  // if all rows exhausted, this is a valid solution.
+  if (row === n) {
+    return callback();
+  }
+
+  // iterate over possible decisions
+  for (var i = 0; i < n; i++) {
+    // place a piece
+    board.togglePiece(row, i);
+    // recurse into remaining problem
+    if (!board[validator]()) {
+      var result = findSolution(row + 1, n, board, validator, callback);
+      if (result) {
+        return result; // EJECT
+      }
+    }
+    // unplace a piece
+    board.togglePiece(row, i);
+  }
+};
 
 window.findNRooksSolution = function(n) {
-  var solution = new Board({n: n});
-  for (var row = 0; row < n; row ++) {
-    for (var col = 0; col < n; col++) {
-      solution.togglePiece(row, col);
-      if (solution.hasAnyRooksConflicts()) {
-        solution.togglePiece(row, col);
-      } 
-    }
-  }
-    
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution.rows();
+
+  var board = new Board({n: n});
+
+  var solution = findSolution(0, n, board, 'hasAnyRooksConflicts', function() {
+    return board.rows();
+  });
   
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  return solution;
 };
+
+// window.findNRooksSolution = function(n) {
+//   var solution = new Board({n: n});
+//   for (var row = 0; row < n; row ++) {
+//     for (var col = 0; col < n; col++) {
+//       solution.togglePiece(row, col);
+//       if (solution.hasAnyRooksConflicts()) {
+//         solution.togglePiece(row, col);
+//       } 
+//     }
+//   }
+    
+//   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+//   return solution.rows();
+  
+// };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {

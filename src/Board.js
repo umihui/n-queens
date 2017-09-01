@@ -83,15 +83,9 @@
       //console.log(currentRow);
       var currentResult = 0;
       for (var i = 0; i < currentRow.length; i++) {
-        if (currentRow[i] === 1) {
-          currentResult++;
-        }
+        currentResult += currentRow[i];
       }
-      if (currentResult > 1) {
-        return true;
-      } else {
-        return false;
-      }
+      return currentResult > 1;
     },
 
     // test if any rows on this board contain conflicts
@@ -114,15 +108,9 @@
     hasColConflictAt: function(colIndex) {
       var currentResult = 0;
       for (var i = 0; i < this.get('n'); i++) {
-        if (this.get(i)[colIndex] === 1) {
-          currentResult++;
-        }
+        currentResult += this.get(i)[colIndex];
       }
-      if (currentResult > 1) {
-        return true;
-      } else {
-        return false;
-      } 
+      return currentResult > 1;
     },
 
     // test if any columns on this board contain conflicts
@@ -144,19 +132,15 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var col = majorDiagonalColumnIndexAtFirstRow;
       var currentResult = 0;
-      
-      for (var row = 0; row < this.get('n'); row++ ) {
-        if (this.get(row)[col] === 1) {
-          //console.log(row, col);
-          currentResult++;
+      var size = this.get('n');
+      var row = 0;
+      for (; row < size && col < size; row++, col++) {
+        if (col >= 0) {
+          currentResult += this.get(row)[col];
         }
-        col++;
       }
-      if (currentResult > 1) {
-        return true;
-      } else {
-        return false;
-      } 
+      return currentResult > 1;
+      
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -178,18 +162,15 @@
      
       var col = minorDiagonalColumnIndexAtFirstRow;
       var currentResult = 0;
+      var row = 0;
       
-      for (var row = 0; row < this.get('n'); row++) {
-        if (this.get(row)[col] === 1) {
-          currentResult++;
-        }
-        col--;
+      
+      for ( ; row < this.get('n') && col >= 0; row++, col-- ) {
+        if (col < this.get('n')) {
+          currentResult += this.get(row)[col]; 
+        } 
       }
-      if (currentResult > 1) {
-        return true;
-      } else {
-        return false;
-      } 
+      return currentResult > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
